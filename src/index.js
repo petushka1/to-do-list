@@ -26,7 +26,6 @@ const taskArr = [
 ];
 
 const list = document.querySelector('.list');
-list.textContent = '';
 
 let listItems = `<li class="bold">Today's To Do<img src=${refresh}></li><li><input class="italic" placeholder = "Add Your To Do..."></input><img src=${enter}></li>`;
 
