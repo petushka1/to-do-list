@@ -65,10 +65,12 @@ input {
   border: 0;
   padding: 0;
   margin: 0;
+  background-color: transparent;
 }
 
 input:focus {
   outline: none;
+  background-color: transparent;
 }
 
 #btn {
@@ -83,4 +85,8 @@ input[type=checkbox] {
   transform: scale(1.5);
   margin-right: 20px;
   border: 2px solid rgba(130, 130, 130, 0.3);
+}
+
+.active {
+  background-color: rgb(255, 250, 232);
 }
