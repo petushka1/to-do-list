@@ -1,9 +1,8 @@
 import './style.css';
+
 import dots from './dots.svg';
-
-// import checked from './checked.svg';
-// import remove from './remove.svg';
-
+import checked from './checked.svg';
+import remove from './remove.svg';
 import enter from './enter.svg';
 import refresh from './refresh.svg';
 
@@ -26,14 +25,18 @@ const taskArr = [
 ];
 
 const list = document.querySelector('.list');
+const btn = document.getElementById('btn');
+const refreshIcon = document.getElementById('refreshIcon');
+const enterIcon = document.getElementById('enterIcon');
 
-let listItems = `<li class="bold">Today's To Do<img src=${refresh}></li><li><input class="italic" placeholder = "Add Your To Do..."></input><img src=${enter}></li>`;
+refreshIcon.src = refresh;
+enterIcon.src = enter;
 
+let listItems = "";
 const populate = (arr) => {
   arr.forEach((item) => {
     listItems += `<li><label><input type="checkbox"><span>${item.description}</span></label><img src=${dots}></li>`;
   });
-  listItems += ` <li id="btn"><input type="submit" value="Clear All Completed"></input></li> `;
   list.innerHTML = listItems;
 };
 

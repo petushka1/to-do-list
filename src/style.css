@@ -2,6 +2,7 @@
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -11,10 +12,31 @@ body {
   background-color: rgb(237, 237, 237);
 }
 
+section {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 70%;
+  padding: 0;
+  box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+}
+
 .font * {
   font-family: 'Ubuntu', sans-serif;
   font-size: 1rem;
   line-height: 1.2rem;
+}
+
+li,
+h1,
+button,
+p {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 20px;
+  border: 0;
+  border-bottom: 1px solid rgba(130, 130, 130, 0.3);
 }
 
 .italic {
@@ -30,25 +52,19 @@ body {
 
 .list {
   box-sizing: border-box;
-  box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
   list-style: none;
-  width: 70%;
+  margin: 0;
   padding: 0;
 }
 
-.list li {
-  border-bottom: 1px solid rgba(130, 130, 130, 0.3);
-  padding: 20px;
-  background-color: #fff;
-}
-
-.list img {
+img {
   float: right;
 }
 
 input {
-  border: none;
-  background-color: unset;
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 input:focus {
@@ -59,15 +75,12 @@ input:focus {
   text-align: center;
   border-bottom: 0;
   background-color: rgb(237, 237, 237);
-}
-
-#btn input {
   color: rgb(130, 130, 130);
   font-weight: 500;
 }
 
 input[type=checkbox] {
   transform: scale(1.5);
-  margin: 0 20px;
+  margin-right: 20px;
   border: 2px solid rgba(130, 130, 130, 0.3);
 }
