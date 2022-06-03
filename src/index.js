@@ -1,2 +1,4 @@
 import './style.css';
-import * as module from './app.js'
+import loadTaskManager from './app.js';
+
+window.addEventListener('DOMContentLoaded', loadTaskManager);
