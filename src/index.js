@@ -1,13 +1,15 @@
 import './style.css';
-// import './app.js'
+import {remove, select} from './app.js'
 
 import dots from './dots.svg';
 import checked from './checked.svg';
-import bin from './remove.svg';
+
 import enter from './enter.svg';
 import refresh from './refresh.svg';
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', loadContent);
+
+function loadContent() {
 const list = document.querySelector('.list');
 console.log(list);
 const btn = document.getElementById('btn');
@@ -23,7 +25,7 @@ let taskArr =[];
 const input = document.querySelector('#yourTask');
 let storedArr = 'to-do-list';
 
-if (localStorage.length !== null) {
+if (localStorage.length > 0) {
   storedArr = localStorage.getItem("storedArr");
   taskArr = JSON.parse(storedArr);
 }
@@ -81,37 +83,5 @@ const populate = (arr) => {
 if (storedArr !== null) {
   populate(JSON.parse(storedArr));
 }
-});
-
-document.body.addEventListener('click', (e) => {
-  if (e.target.classList.contains('item')) {
-    const checkElement = document.body.querySelector('.active');
-    if (checkElement != null) {
-      checkElement.classList.remove('active');
-      const tempImg = checkElement.lastChild;
-      tempImg.src = dots;
-    }
-    //document.body.getElementByClassName('active').classList.remove('active');
-    const current = e.target;
-    current.classList.toggle('active');
-    const tempImg = current.lastChild;
-    tempImg.src = bin;
-
-    tempImg.addEventListener('click', remove);
-  }
-});
-
-function remove(tempImg) {
-  const tempArr = JSON.parse(localStorage.getItem("storedArr"));
-  const li = tempImg.target.parentElement;
-  li.remove();
-  let index = parseInt(li.id, 10);
-  console.log(index);
-  tempArr.splice(index, 1);
-
-  for (index; index < tempArr.length; index++) {
-    tempArr[index].index = index;
-    document.getElementById(`${index+1}`).id = index;
 }
-  localStorage.setItem("storedArr", JSON.stringify(tempArr));
-}
+document.body.addEventListener('click', select);
