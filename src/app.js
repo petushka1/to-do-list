@@ -19,14 +19,7 @@ export default function loadTaskManager() {
   const input = document.querySelector('#yourTask');
 
   if (localStorage.length > 0) {
-    /** these were a terrible practice and eventually an error at some point...
-     *
-      storedArr = localStorage.getItem("storedArr");
-      taskArr = JSON.parse(storedArr);
-
-    */
     const temp = localStorage.getItem('storedArr');
-
     if (temp) taskArr = JSON.parse(temp);
   }
 
@@ -47,14 +40,7 @@ export default function loadTaskManager() {
     taskArr.push(newTask);
     localStorage.setItem("storedArr", JSON.stringify(taskArr));
     const newListItem = makeTaskElement(newTask);
-
-    /** this below was an error, a terrible huge massive error
-     *
-      newListItem.id = taskArr.length;
-    */
-
     newListItem.id = newTask.index;
-
     list.appendChild(newListItem);
   }
 
@@ -78,16 +64,6 @@ export default function loadTaskManager() {
     }
   });
 
-  /** this here is an error and nonsense since you already the same logic at line 22-32
-
-    storedArr = localStorage.getItem("storedArr");
-   */
-
-  /** This should be moved inside the .forEach loop, it has no business out here
-
-   let listItems = "";
-  */
-
   const populate = () => {
     let listItems = "";
 
@@ -105,12 +81,6 @@ export default function loadTaskManager() {
     list.innerHTML = listItems;
   };
 
-  /** this is nonsense, so removed
-
-  if (storedArr !== null) {
-      populate(JSON.parse(storedArr));
-    }
-  */
   populate();
 
   function remove({ target }) {
@@ -127,35 +97,28 @@ export default function loadTaskManager() {
       list.children[index].id = index;
     }
 
-    // made some changes down here as well
     localStorage.setItem("storedArr", JSON.stringify(taskArr));
   }
 
   document.body.addEventListener('click', (e) => {
     if (e.target.classList.contains('item')) {
-      // made some changes down here
       const checkElement = list.querySelector('.active');
 
       if (checkElement != null) {
         checkElement.classList.remove('active');
-        // made some changes down here as well
         const [, lastChild] = checkElement.children;
         lastChild.src = dots;
       }
 
       const current = e.target;
       current.classList.toggle('active');
-      // made some changes down here as well
       const [, lastChild] = current.children;
       lastChild.src = bin;
 
-      // made some changes down here as well
       if (!lastChild.isBound) {
         lastChild.addEventListener('click', remove);
         lastChild.isBound = true;
       }
     }
   });
-
-  // made some changes down here as well
 }
