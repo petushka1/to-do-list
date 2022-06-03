@@ -16,10 +16,8 @@ const enterIcon = document.getElementById('enterIcon');
 refreshIcon.src = refresh;
 enterIcon.src = enter;
 
-
-
 list.innerHTML = '';
-let taskArr =[];
+const taskArr =[];
 
 const input = document.querySelector('#yourTask');
 
@@ -62,16 +60,17 @@ if (e.target.classList.contains('edit')) {
     }
   }
 });
-
+var arrayFromStorage = localStorage.getItem("storedArr");
 let listItems = "";
 const populate = (arr) => {
   arr.forEach((item, i) => {
-    listItems += `<li class="item"><label><input type="checkbox"><input class="edit" placeholder='${description}'></input></label><img src='${dots}'></li>`;
+    listItems += `<li class="item"><label><input type="checkbox"><input class="edit" placeholder='${item.description}'></input></label><img src='${dots}'></li>`;
   });
   list.innerHTML = listItems;
 };
-// populate(JSON.parse(localStorage.getItem('storedArr')));
-populate(taskArr);
+if (arrayFromStorage !== null) {
+  populate(JSON.parse(arrayFromStorage));
+}
 });
 
 document.body.addEventListener('click', (e) => {
@@ -92,6 +91,8 @@ document.body.addEventListener('click', (e) => {
     const index = f.target.parentNode.id;
     // taskArr.slice(index, 1);
     f.target.parentNode.remove();
-}
+    window.localStorage.removeItem('index: index-1');
+
+    }
   }
 });
