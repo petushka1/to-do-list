@@ -9,6 +9,7 @@ import refresh from './refresh.svg';
 
 window.addEventListener('DOMContentLoaded', () => {
 const list = document.querySelector('.list');
+console.log(list);
 const btn = document.getElementById('btn');
 const refreshIcon = document.getElementById('refreshIcon');
 const enterIcon = document.getElementById('enterIcon');
@@ -17,9 +18,15 @@ refreshIcon.src = refresh;
 enterIcon.src = enter;
 
 list.innerHTML = '';
-const taskArr =[];
+let taskArr =[];
 
 const input = document.querySelector('#yourTask');
+let storedArr = 'to-do-list';
+
+if (localStorage.length !== null) {
+  storedArr = localStorage.getItem("storedArr");
+  taskArr = JSON.parse(storedArr);
+}
 
 function makeTaskElement({description}) {
   const li = document.createElement('li');
@@ -30,16 +37,17 @@ function makeTaskElement({description}) {
 
 function addTask(description) {
   const newTask = {
-    index: taskArr.length + 1,
+    index: taskArr.length,
     description: description,
     completed: false,
   };
   taskArr.push(newTask);
   localStorage.setItem("storedArr", JSON.stringify(taskArr));
   const newListItem = makeTaskElement(newTask);
-  newListItem.id = newTask.index;
+  newListItem.id = taskArr.length;
   list.appendChild(newListItem);
 }
+console.log(taskArr);
 
 input.onkeypress = function(e) {
   if (e.keyCode === 13 && e.target.value != '') {
@@ -60,16 +68,18 @@ if (e.target.classList.contains('edit')) {
     }
   }
 });
-var arrayFromStorage = localStorage.getItem("storedArr");
+
+storedArr = localStorage.getItem("storedArr");
 let listItems = "";
+
 const populate = (arr) => {
-  arr.forEach((item, i) => {
-    listItems += `<li class="item"><label><input type="checkbox"><input class="edit" placeholder='${item.description}'></input></label><img src='${dots}'></li>`;
+  arr.forEach((item) => {
+    listItems += `<li id='${item.index}' class="item"><label><input type="checkbox"><input class="edit" placeholder='${item.description}'></input></label><img src='${dots}'></li>`;
   });
   list.innerHTML = listItems;
 };
-if (arrayFromStorage !== null) {
-  populate(JSON.parse(arrayFromStorage));
+if (storedArr !== null) {
+  populate(JSON.parse(storedArr));
 }
 });
 
@@ -87,12 +97,21 @@ document.body.addEventListener('click', (e) => {
     const tempImg = current.lastChild;
     tempImg.src = bin;
 
-    tempImg.onclick = function(f) {
-    const index = f.target.parentNode.id;
-    // taskArr.slice(index, 1);
-    f.target.parentNode.remove();
-    window.localStorage.removeItem('index: index-1');
-
-    }
+    tempImg.addEventListener('click', remove);
   }
 });
+
+function remove(tempImg) {
+  const tempArr = JSON.parse(localStorage.getItem("storedArr"));
+  const li = tempImg.target.parentElement;
+  li.remove();
+  let index = parseInt(li.id, 10);
+  console.log(index);
+  tempArr.splice(index, 1);
+
+  for (index; index < tempArr.length; index++) {
+    tempArr[index].index = index;
+    document.getElementById(`${index+1}`).id = index;
+}
+  localStorage.setItem("storedArr", JSON.stringify(tempArr));
+}
