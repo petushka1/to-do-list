@@ -18,10 +18,8 @@ export default function loadTaskManager() {
 
   const input = document.querySelector('#yourTask');
 
-  if (localStorage.length > 0) {
-    const temp = localStorage.getItem('storedArr');
-    if (temp) taskArr = JSON.parse(temp);
-  }
+  const temp = localStorage.getItem('storedArr');
+  if (temp) taskArr = JSON.parse(temp);
 
   function makeTaskElement({ description }) {
     const li = document.createElement('li');
@@ -36,12 +34,13 @@ export default function loadTaskManager() {
       description,
       completed: false,
     };
-
+    taskArr = JSON.parse(localStorage.getItem('storedArr'));
     taskArr.push(newTask);
     localStorage.setItem("storedArr", JSON.stringify(taskArr));
     const newListItem = makeTaskElement(newTask);
     newListItem.id = newTask.index;
     list.appendChild(newListItem);
+    location.reload();
   }
 
   input.addEventListener('keypress', (e) => {
