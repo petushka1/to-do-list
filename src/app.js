@@ -60,6 +60,9 @@ export default function loadTaskManager() {
         const { value } = e.target;
         e.target.placeholder = value;
         e.target.value = '';
+        const index = parseInt(e.target.parentElement.parentElement.id, 10);
+        taskArr[index].description = value;
+        localStorage.setItem("storedArr", JSON.stringify(taskArr));
       }
     }
   });
@@ -88,10 +91,8 @@ export default function loadTaskManager() {
     li.remove();
 
     let index = parseInt(li.id, 10);
-    // console.log(index);
     taskArr.splice(index, 1);
 
-    // made some changes down here as well
     for (index; index < taskArr.length; index += 1) {
       taskArr[index].index = index;
       list.children[index].id = index;
