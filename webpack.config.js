@@ -18,6 +18,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
    output: {
      filename: 'index.js',
      path: path.resolve(__dirname, 'dist'),
+     clean: true,
    },
    module: {
      rules: [
