@@ -1,8 +1,11 @@
+
+
 import dots from './dots.svg';
 // import checked from './checked.svg';
 import bin from './remove.svg';
 import enter from './enter.svg';
 import refresh from './refresh.svg';
+
 
 export default function loadTaskManager() {
   const list = document.querySelector('.list');
