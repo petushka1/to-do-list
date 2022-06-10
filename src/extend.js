@@ -1,59 +1,135 @@
-/* eslint-env es6 */
+import { taskArr } from './localstorage.js';
+import { rearange, list, isListempty } from './app.js';
 
-export default function loadCheckboxFunctionality() {
-  let taskArr = JSON.parse(localStorage.getItem('storedArr'));
-  const checkboxes = document.body.querySelectorAll('input[type=checkbox]');
-  const btn = document.getElementById('btn');
+// Milstone 3tr
+// variables declaration
+const btn = document.getElementById('btn');
 
-  function store() {
-    localStorage.setItem("storedArr", JSON.stringify(taskArr));
+
+
+
+
+// functionality
+// change event status
+
+
+
+/*
+if (isListempty()) {
+taskArr.forEach((item, i) => {
+  if (item.completed === true) {
+    let li = document.getElementById(`${i}`);
+    li.querySelector('input[type=checkbox]').checked = true;
+  }
+});
+}
+*/
+// add text decoration for completed tasks
+export function taskCompleted(target) {
+  //if (isListempty()) {
+//  getTaskArray();
+  let taskCompletedLi = target.parentElement.parentElement;
+  const index = parseInt(taskCompletedLi.id, 10);
+
+  if (target.checked) {
+    taskArr[index].completed = true;
+    target.nextElementSibling.style['text-decoration'] = 'line-through';
+  } else {
+    taskArr[index].completed = false;
+    target.nextElementSibling.style['text-decoration'] = 'none';
+  }
+//}
+// setLocalStorage();
+localStorage.setItem("storedArr", JSON.stringify(taskArr));
+}
+
+// clear all completed tasks on button click
+export function clearCompleted() {
+  taskArr = taskArr.filter((task) => task.completed === false);
+
+  document.body.querySelectorAll(':checked').forEach(({parentElement}) => {
+    const parent = parentElement.parentElement;
+    parent.remove();
+  });
+
+  rearange();
+//  setLocalStorage()
+  localStorage.setItem("storedArr", JSON.stringify(taskArr));
+}
+
+// assign event listeners
+document.body.addEventListener('change', ({target}) => {
+  if (target.tagName === 'INPUT' && target.type === 'checkbox') {
+    taskCompleted(target);
+  }
+});
+
+btn.addEventListener('click', clearCompleted);
+
+/* export function loadCheckboxFunctionality() {
+
+  let taskArr = [];
+
+  function getTaskArray() {
+    const tasks = localStorage.getItem('storedArr');
+    if (tasks) taskArr = JSON.parse(tasks);
   }
 
+  getTaskArray();
+
+  const btn = document.getElementById('btn');
+
+  btn.addEventListener('click', clearCompleted);
+
   taskArr.forEach((item, i) => {
-    const li = document.getElementById(`${i}`);
     if (item.completed === true) {
+      let li = document.getElementById(`${i}`);
       li.querySelector('input[type=checkbox]').checked = true;
     }
   });
 
-  function taskCompleted(e) {
-    const taskCompletedLi = e.target.parentElement.parentElement;
-    const index = parseInt(taskCompletedLi.id, 10);
-
-    if (e.target.checked) {
-      taskArr[index].completed = true;
-    } else {
-      taskArr[index].completed = false;
+  document.body.addEventListener('change', ({target}) => {
+    if (target.tagName === 'INPUT' && target.type === 'checkbox') {
+      taskCompleted(target);
     }
-    store();
-  }
-
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener('change', taskCompleted);
   });
 
-  function rearange() {
-    taskArr.forEach((item, i) => {
-      const index = parseInt(item.index, 10);
-      document.getElementById(`${index}`).id = i;
-      item.index = i;
-    });
-    store();
-    location.reload();
+  function taskCompleted(target) {
+    getTaskArray();
+
+    let taskCompletedLi = target.parentElement.parentElement;
+    const index = parseInt(taskCompletedLi.id, 10);
+
+    if (target.checked) {
+      taskArr[index].completed = true;
+	  target.nextElementSibling.style['text-decoration'] = 'line-through';
+    } else {
+      taskArr[index].completed = false;
+	  target.nextElementSibling.style['text-decoration'] = 'none';
+    }
+
+    localStorage.setItem("storedArr", JSON.stringify(taskArr));
   }
 
   function clearCompleted() {
     taskArr = taskArr.filter((task) => task.completed === false);
 
-    checkboxes.forEach((checkbox) => {
-      if (checkbox.checked === true) {
-        const checkboxParent = checkbox.parentElement.parentElement;
-        checkboxParent.remove();
-      }
+    document.body.querySelectorAll(':checked').forEach(({parentElement}) => {
+      const parent = parentElement.parentElement;
+      parent.remove();
     });
 
     rearange();
   }
 
-  btn.addEventListener('click', clearCompleted);
+  function rearange() {
+    taskArr.forEach((item, i) => {
+      let index = parseInt(item.index, 10);
+      document.getElementById(`${index}`).id = i;
+      item.index = i;
+    });
+    localStorage.setItem("storedArr", JSON.stringify(taskArr));
+  }
+
 }
+*/
